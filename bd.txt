@@ -1,0 +1,115 @@
+
+CREATE TABLE usuario (
+                login VARCHAR(20) NOT NULL,
+                senha VARCHAR(50) NOT NULL,
+                nome VARCHAR(80) NOT NULL,
+                categoria CHAR(1) NOT NULL,
+                situacao CHAR(1) NOT NULL,
+                CONSTRAINT usuario_pk PRIMARY KEY (login)
+);
+
+
+CREATE TABLE aluno (
+                matricula CHAR(15) NOT NULL,
+                nome VARCHAR(80) NOT NULL,
+                sexo CHAR(1) NOT NULL,
+                categoria CHAR(1) NOT NULL,
+                situacao CHAR(1) NOT NULL,
+                CONSTRAINT aluno_pk PRIMARY KEY (matricula)
+);
+
+
+CREATE TABLE disciplina (
+                codigo INTEGER NOT NULL,
+                nome VARCHAR(80) NOT NULL,
+                ch INTEGER NOT NULL,
+                CONSTRAINT disciplina_pk PRIMARY KEY (codigo)
+);
+
+
+CREATE TABLE curso (
+                numero INTEGER NOT NULL,
+                nome VARCHAR(150) NOT NULL,
+                sigla CHAR(3) NOT NULL,
+                CONSTRAINT curso_pk PRIMARY KEY (numero)
+);
+
+
+CREATE TABLE projeto (
+                numero INTEGER NOT NULL,
+                ano INTEGER NOT NULL,
+                modulo CHAR(3) NOT NULL,
+                semestre INTEGER NOT NULL,
+                dt_inicio DATE NOT NULL,
+                dt_termino DATE NOT NULL,
+                tema VARCHAR(100) NOT NULL,
+                descricao VARCHAR(8000) NOT NULL,
+                CONSTRAINT projeto_pk PRIMARY KEY (numero)
+);
+
+
+CREATE TABLE composto (
+                numero INTEGER NOT NULL,
+                codigo INTEGER NOT NULL,
+                desc_atividade VARCHAR(2000) NOT NULL,
+                CONSTRAINT composto_pk PRIMARY KEY (numero, codigo)
+);
+
+
+CREATE TABLE grupo (
+                id INTEGER NOT NULL,
+                nome VARCHAR(60) NOT NULL,
+                numero INTEGER NOT NULL,
+                CONSTRAINT grupo_pk PRIMARY KEY (id)
+);
+
+
+CREATE TABLE participa (
+                matricula CHAR(15) NOT NULL,
+                id INTEGER NOT NULL,
+                nota NUMERIC(3,1) NOT NULL,
+                CONSTRAINT participa_pk PRIMARY KEY (matricula, id)
+);
+
+
+ALTER TABLE participa ADD CONSTRAINT aluno_participa_fk
+FOREIGN KEY (matricula)
+REFERENCES aluno (matricula)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE composto ADD CONSTRAINT disciplina_composto_fk
+FOREIGN KEY (codigo)
+REFERENCES disciplina (codigo)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE projeto ADD CONSTRAINT curso_projeto_fk
+FOREIGN KEY (numero)
+REFERENCES curso (numero)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE grupo ADD CONSTRAINT projeto_grupo_fk
+FOREIGN KEY (numero)
+REFERENCES projeto (numero)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE composto ADD CONSTRAINT projeto_composto_fk
+FOREIGN KEY (numero)
+REFERENCES projeto (numero)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE participa ADD CONSTRAINT grupo_participa_fk
+FOREIGN KEY (id)
+REFERENCES grupo (id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
