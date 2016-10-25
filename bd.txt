@@ -35,8 +35,10 @@ CREATE TABLE curso (
 );
 
 
+CREATE SEQUENCE public.projeto_numero_seq;
+
 CREATE TABLE projeto (
-                numero INTEGER NOT NULL,
+                numero INTEGER NOT NULL DEFAULT nextval('projeto_numero_seq'),
                 ano INTEGER NOT NULL,
                 modulo CHAR(3) NOT NULL,
                 semestre INTEGER NOT NULL,
@@ -47,6 +49,8 @@ CREATE TABLE projeto (
                 CONSTRAINT projeto_pk PRIMARY KEY (numero)
 );
 
+
+ALTER SEQUENCE projeto_numero_seq OWNED BY projeto.numero;
 
 CREATE TABLE composto (
                 numero INTEGER NOT NULL,
@@ -81,35 +85,35 @@ NOT DEFERRABLE;
 
 ALTER TABLE composto ADD CONSTRAINT disciplina_composto_fk
 FOREIGN KEY (codigo)
-REFERENCES disciplina (codigo)
+REFERENCES public.disciplina (codigo)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE projeto ADD CONSTRAINT curso_projeto_fk
 FOREIGN KEY (numero)
-REFERENCES curso (numero)
+REFERENCES public.curso (numero)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE grupo ADD CONSTRAINT projeto_grupo_fk
 FOREIGN KEY (numero)
-REFERENCES projeto (numero)
+REFERENCES public.projeto (numero)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE composto ADD CONSTRAINT projeto_composto_fk
 FOREIGN KEY (numero)
-REFERENCES projeto (numero)
+REFERENCES public.projeto (numero)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE participa ADD CONSTRAINT grupo_participa_fk
 FOREIGN KEY (id)
-REFERENCES grupo (id)
+REFERENCES public.grupo (id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
