@@ -8,7 +8,7 @@
         $result = pg_exec($conexao, $sql);
         $consulta = pg_fetch_array($result);
         
-        if ($login != "senac" && $senha != "senac123"){
+        if ($login != "" && $senha != ""){
             if (pg_num_rows($result) > 0) {
                 setcookie("nome_usuario", $consulta['nome']);
                 setcookie("login_usuário", $consulta['login']);
