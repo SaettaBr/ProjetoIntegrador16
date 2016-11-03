@@ -23,7 +23,7 @@
   </div>
   <div id="navbar" class="navbar-collapse collapse">
    <ul class="nav navbar-nav navbar-right">
-    <li><a href="#">Início</a></li>
+    <li><a href="/index.html">Início</a></li>
     <li><a href="#">Listar Usuários</a></li>
     <li><a href="#">Alterar Usuários</a></li>
     <li><a href="#">Ajuda</a></li>
@@ -35,11 +35,7 @@
 <br/>
 <br/>
 
-    <div class="container text-center">
-        <form id="form1" name="form1" class="form-horizontal" action="../../Desktop/Programação para Internet/login.php" method="post">
-            <fieldset>
-                
-                           
+                             
                     <div class="container text-center">
         <form name="formCad" id="formCad" class="form-horizontal" action="cadUsuario.php" method="post">
             <fieldset>
@@ -77,10 +73,10 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoria">Categoria:</label>  
                 <div class="col-md-4">
-    <select class="form-control" id="categoria">
-    <option>Gerente</option>
-    <option>Professor</option>
-    <option>Coordenador</option>
+    <select class="form-control" name="categoria" id="categoria">
+    <option value="G">Gerente</option>
+    <option value="P">Professor</option>
+    <option value="C">Coordenador</option>
     </select>
 		</div>       
     </div>            
@@ -91,13 +87,13 @@
                     <div class="col-md-2">
                         <div class="radio-inline">
                             <label for="situacao-0">
-                                <input type="radio" name="situacao" id="situacao-0" value="a">
+                                <input type="radio" name="situacao" id="situacao-0" value="A">
                                 Ativo
                             </label>
                         </div>
                         <div class="radio-inline">
                             <label for="situacao-1">
-                                <input type="radio" name="situacao" id="situacao-1" value="i">
+                                <input type="radio" name="situacao" id="situacao-1" value="I">
                                 Inativo
                             </label>
                         </div>
@@ -106,7 +102,7 @@
                 
                 <div class="form-group">
                     <div class="col-md-12">
-                        <button id="enviar" name="enviar" class="btn btn-success"><!-- onclick="return validarCadastro()" -->Enviar</button>
+                        <button id="enviar" name="enviar" class="btn btn-success">Enviar</button>
                         <button type="reset" id="limpar" name="limpar" class="btn btn-danger">Limpar</button>
                     </div>
                 </div>
