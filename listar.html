@@ -6,8 +6,8 @@
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <title>SIPI</title>
 
- <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
- <link href="bootstrap/css/style.css" rel="stylesheet">
+ <link href="html/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <link href="html/bootstrap/css/style.css" rel="stylesheet">
 </head>
 <body> 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -42,18 +42,19 @@
 		 
 		   <label class="col-md-4 control-label" for="selectbasic">Organizar por:</label>
   <div class="col-md-4">
-    <select id="selectbasic" name="selectbasic" class="form-control" <button type="button" class="btn btn-danger">Botão</button>
-      <option value="1">Nome</option>
-      <option value="2">Matricula</option>
+    <select id="listar" name="listar" class="form-control" <button type="button" class="btn btn-danger">Botão</button>
+	<option value="" select=""></option>      
+	<option value="1">Nome</option>
+     	<option value="2">Matricula</option>
 	  <div class="col-md-8">
-		
+	
+		  </div>
     </select>
+	<div><button id="enviar" name="enviar" class="btn btn-success">  Enviar  </button>
+		  
+		<button id="retornar" name="retornar" class="btn btn-danger">Retornar</button></div>
   </div>
 </div>
-			<button id="alterar" name="alterar" class="btn btn-success">Alterar</button>
-			<button id="excluir" name="excluir" class="btn btn-danger">Excluir</button>
-		  </div>
-		 
 		 
  <script src="bootstrap/js/jquery.min.js"></script>
  <script src="bootstrap/js//bootstrap.min.js"></script>
