@@ -23,13 +23,13 @@
 				break;
 		}
 				
-		$sql = "select matricula,nome,sexo,dtNasc,cidade,uf from public.aluno where 1=1 order by $orderer";
+		$sql = "select matricula,nome,sexo,dtNasc,cidade,uf from aluno where 1=1 order by $orderer";
 		
 		foreach($columns as $value){
 			if($value != $orderer){ $sql .= "," . $value;}
 		}
 				
-		$strCon = "host=127.0.0.1 dbname=ProjetoIntegrador port=5432 user=teste password=root";	
+		
 		$result1 = pg_query($conexao, $sql);		
 		$con = pg_connect($strCon);
 		if(!$con){
