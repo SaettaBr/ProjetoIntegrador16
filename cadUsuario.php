@@ -23,28 +23,27 @@
 							if ($situacao != ""){
 								if (pg_num_rows($result1) == 0) {		
 									pg_query($conexao, $sql2);
-									echo "<br><br><h3>Cadastro realizado com sucesso!</h3>";
-                                    } else {
-                                 echo "<br><br><h3>Já exite um usuário cadastrado com esse login. Tente novamente!</h3>";
-                                   }
-                                } else {
-                                    echo "<br><br><h3>A situação não foi selecionada!</h3>";
-                                }
-                              } else {
-                        		echo "<br><br><h3>O nome não foi informado!</h3>";
-							  }
-                } else {
-                    echo "<br><br><h3>As senhas não conferem!</h3>";
-                }
-            } else {
-                echo "<br><br><h3>A senha não foi informada!</h3>";
-            }
-        } else {
-            echo "<br><br><h3>O login não foi informado!</h3>";
-        }
-    } else {
-        echo "<br><br><h3>Falha na conexão com o banco de dados!</h3>";
-    }
-    
-	}
-    ?>
+										echo "<script>window.location='form_cad_usuario.php';alert('Usuário cadastrado com sucesso !!');</script>";		
+										} else {
+											echo "<script>window.location='form_cad_usuario.php';alert('Usuário já cadastrado!!');</script>";
+										}
+										}else
+											echo "<script>window.location='form_cad_usuario.php';alert('Situação não informada!!');</script>";
+										}
+											else {
+												echo "<script>window.location='form_cad_usuario.php';alert('Nome não informado!!');</script>";
+												}
+												}else {
+                    								echo "<h3><script>window.location='form_cad_usuario.php';alert('Senhas não conferem!!');</script></h3>";
+													}
+													}else {
+														echo "<h3><script>window.location='form_cad_usuario.php';alert('Senha não informada!!');</script></h3>";
+														}
+														}else {
+                                							echo "<h3><script>window.location='form_cad_usuario.php';alert('Login não informado!!');</script></h3>";
+															}
+															}else {
+																echo "<h3><script>window.location='form_cad_usuario.php';alert('Falha conexão com Banco de Dados!!');</script></h3>";
+																}
+							}
+							?>

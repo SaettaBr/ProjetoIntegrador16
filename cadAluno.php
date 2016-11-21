@@ -24,26 +24,26 @@
 						if($uf != ""){
 							if (pg_num_rows($result1) == 0) {		
 								pg_query($conexao, $sql2);
-								echo "<br><br><h3>Cadastro realizado com sucesso!</h3>";
+									echo "<script>window.location='form_cad_usuario.php';alert('Usuário cadastrado no sistema !!');</script>";		
 							}else{								
-								echo "<br><br><h3>Matrícula já cadastrada!</h3>";
+								echo "<script>window.location='form_cad_usuario.php';alert('Matricula já cadastrada!!');</script>";
 							}
 						}else{
-							echo "<br><br><h3>A UF (Unidade Ferativa) não foi informada!</h3>";
+							echo "<script>window.location='form_cad_usuario.php';alert('UF não informado!!');</script>";
 						}
 					}else{
-						echo "<br><br><h3>A cidade não foi informada!</h3>";
+						echo "<script>window.location='form_cad_usuario.php';alert('Cidade não informada!!');</script>";
 					}
 				}else{
-					echo "<br><br><h3>A data de nascimento não foi informada!</h3>";
+					echo "<script>window.location='form_cad_usuario.php';alert('Data nascimento não informado!!');</script>";
 				}
 			}else{
-				echo "<br><br><h3>O sexo não foi selecionada!</h3>";
+				echo "<script>window.location='form_cad_usuario.php';alert('sexo não informado!!');</script>";		
 			}
 		}else{
-			echo "<br><br><h3>O nome não foi informado!</h3>";
+			echo "<script>window.location='form_cad_usuario.php';alert('Usuário cadastrado no sistema !!');</script>";		
+	}
 		}
 	}
-}
-	
+		
 ?>
