@@ -13,7 +13,7 @@
         $sql1="SELECT * FROM usuario WHERE login='$login'";
         $sql2="UPDATE usuario SET login='$login', senha='$senha', nome='$nome', categoria ='$categoria', situacao='$situacao' where login='$login'";
 	    $result1 = pg_query($conexao, $sql1);
-        
+    if(pg_num_rows($result1) ==1){    
       if ($login != "") {
             if ($senha != ""){
                 if ($senha == $confirmacao){
@@ -41,7 +41,7 @@
 		echo "<script>window.location='list_usuario.php';alert('Falha na conexão com o banco de dados!')</script>";
 
     }
-    
+	}
 	}
 	 echo "<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/style.css' rel='stylesheet'><div class='container droppedHover text-center'>
     <div class='form-group'><div class='col-md-12'><a href='listAluno.php' class='btn btn-lg btn-primary'>Voltar</a></div></div></div>";

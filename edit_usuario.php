@@ -2,10 +2,9 @@
      include 'conecta.php';
      $identEdit=$_GET['log'];
      $sql="SELECT * FROM usuario WHERE login = '$identEdit'";
-     $dados1=pg_exec($conexao, $sql);
+     $dados1=pg_query($conexao, $sql);
      $linha=pg_fetch_array($dados1);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -38,6 +37,7 @@
                                 <li><a href="form_cad_disciplina.php">Disciplinas</a></li>
                                 <li><a href="form_cad_projeto.php">Projetos</a></li>
                                 <li><a href="form_cad_grupo.php">Grupos</a></li>
+                                <li><a href="form_cad_atividades.php">Atividade</a></li>
                               </ul>
                               </li>
                     </ul>
@@ -53,6 +53,7 @@
                                 <li><a href="list_disciplina.php">Disciplinas</a></li>
                                 <li><a href="list_projeto.php">Projetos</a></li>
                                 <li><a href="list_grupo.php">Grupos</a></li>
+                                <li><a href="list_atividades.php">Atividade</a></li>
                               </ul>
                               </li>
                     </ul>
@@ -64,6 +65,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="relat_alunos.php">Alunos</a></li>
                                 <li><a href="relat_grupos.php">Grupos</a></li>
+                                <li><a href="relat_projetos.php">Projetos</a></li>
+                                <li><a href="relat_alunos2.php">Alunos X Projetos</a></li>
                                  </ul>
                               </li>
                     </ul>
@@ -77,18 +80,15 @@
       <li><a href="logout.php">Sair</a></li>
    </ul>
   </div>
-                   </div>
-                    </div>
-     
-                    </div>
-                    
-        
-                    </nav>
-                    <br/>
-                    <br/>
-                    <br/>
-                  
-
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<br/>
+<br/>
+<br/>   
      <div class="container">
                 
           <div class="row marketing">
@@ -131,8 +131,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="categoria">Categoria:</label>  
                 <div class="col-md-4">
-    <select class="form-control" name="categoria" id="categoria" required>
-    <?php echo "<option value='".$linha['categoria']."'>".strtoupper($linha['categoria'])."</option>"; ?>
+    <select class="form-control" name="categoria" value="<?php echo $linha['categoria']; ?> id="categoria" required>
     <option value="G">Gerente</option>
     <option value="P">Professor</option>
     <option value="C">Coordenador</option>
@@ -142,8 +141,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="situacao">Situação:</label>  
                 <div class="col-md-4">
-    <select class="form-control" name="situacao"  id="situacao" required>
-    <?php echo "<option value='".$linha['situacao']."'>".strtoupper($linha['situacao'])."</option>"; ?>
+    <select class="form-control" name="situacao" value="<?php echo $linha['situacao']; ?>id="situacao" required>
     <option value="A">Ativo</option>
     <option value="I">Inativo</option>
     </select>

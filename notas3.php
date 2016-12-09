@@ -34,6 +34,7 @@
                                 <li><a href="form_cad_disciplina.php">Disciplinas</a></li>
                                 <li><a href="form_cad_projeto.php">Projetos</a></li>
                                 <li><a href="form_cad_grupo.php">Grupos</a></li>
+                                <li><a href="form_cad_atividades.php">Atividade</a></li>
                               </ul>
                               </li>
                     </ul>
@@ -49,6 +50,7 @@
                                 <li><a href="list_disciplina.php">Disciplinas</a></li>
                                 <li><a href="list_projeto.php">Projetos</a></li>
                                 <li><a href="list_grupo.php">Grupos</a></li>
+                                <li><a href="list_atividades.php">Atividade</a></li>
                               </ul>
                               </li>
                     </ul>
@@ -60,6 +62,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="relat_alunos.php">Alunos</a></li>
                                 <li><a href="relat_grupos.php">Grupos</a></li>
+                                <li><a href="relat_projetos.php">Projetos</a></li>
+                                <li><a href="relat_alunos2.php">Alunos X Projetos</a></li>
                                  </ul>
                               </li>
                     </ul>
@@ -73,16 +77,15 @@
       <li><a href="logout.php">Sair</a></li>
    </ul>
   </div>
-                   </div>
-                    </div>
-     
-                    </div>
-                    
-        
-                    </nav>
-                    <br/>
-                    <br/>
-                    <br/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<br/>
+<br/>
+<br/>   
                    
      <link href="css/bootstrap.min.css" rel="stylesheet">
      <link href="css/style.css" rel="stylesheet">
@@ -98,18 +101,10 @@
 
 <body>
      <div class="container">
-          
-          
-          <div class="row marketing">
-               <div class="col-lg-12">
-                    <form class="form-horizontal" action="cadNotas.php" method="post" >
-                         <fieldset>
-                      
-                              <legend class="text-center">Lançamento de notas dos Alunos</legend>
+               <form name="aluno" id="aluno" class="table" action="cadNotas.php" method="post">
+                   <legend class="text-center">Lançamento de notas dos Alunos</legend>
+                             
                               
-                              <div class="form-group">
-                                   <label class="col-md-12 control-label" for="alunos"></label>
-                                   <div class="col-md-12">
             <?php
 			include 'conecta.php';
 			$alunos = $_GET['grupo'];
@@ -117,29 +112,36 @@
 			$dados = pg_query($conexao, $sql);
 			$total = pg_num_rows($dados);
 			$index=1;
-			echo "<table>";
 			while( $linha = pg_fetch_array($dados) ){
 						?>
-                        <tr>
-      						<td>  
-                            	<input type="hidden" id="mat<?=$index;?>" name="mat<?=$index;?>" value="<?php echo $linha['matricula']; ?>"/>
-                            	<input type="hidden" id="grupo<?=$index;?>" name="grupo<?=$index;?>" value="<?php echo $linha['id_grupo']; ?>"/>
-
+<div class="container text-center">
+    <div class="form-group">
+        <label class="col-md-12 control-label" for="nome"></label>  
+        <div class="col-md-8">
+            <td> <input  type="hidden" id="mat<?=$index;?>" name="mat<?=$index;?>" value="<?php echo $linha['matricula']; ?>"/></td>
+        </div>
+    </div> 
+    
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="nota"></label>  
+        <div class="col-md-4">
+            <td><input  type="hidden" id="grupo<?=$index;?>" name="grupo<?=$index;?>" value="<?php echo $linha['id_grupo']; ?>"/></td>
+        </div>
+    </div> 
+</div>       
+	    
                                 <?=$linha['nome'];?>
-                            </td>
-                            <td>  
+                            
+                             
                                 &nbsp;<input id="nota<?=$index;?>" name="nota<?=$index;?>" type="float" size=10/>
-                            </td>
-                        </tr>
+                          
             <?php
 					$index++;
 			}
 
 			?>
-            </table>
-			
-                       </div>
-                              </div>
+          
+            
                                    <div class="form-group text-center">
                                    <div class="col-md-12">
                                         <input type="submit" id="salvar" name="salvar" class="btn btn-success" value="Enviar">

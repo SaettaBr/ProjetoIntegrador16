@@ -1,30 +1,41 @@
 ﻿<?php
-include 'conecta.php';
-
-
-if ($conexao) {
-	$login=$_POST['login'];
-	$senha=md5($_POST['senha']);
-			
-	$sql1=pg_query("SELECT * FROM usuario WHERE login='$login'AND senha = '$senha'");
-	$row=pg_num_rows($sql1);
-	
-		
-	if(get_magic_quotes_gpc() == 0){
-		$login = addslashes($login);
-		$senha = addslashes($senha);
-	}
-	
-	if($row == 0){
-		echo "<script>window.location='index.php';alert('Usuário e/ou Senha Inválidos')</script>";
-					
-	}
-	$dados = pg_fetch_array ($sql1);
-	if ($dados ["situacao"] != 'A'){
-			echo "<script>window.location='index.php';alert('Usuário Inativo no sistema !!')</script>";
-	}else{
-		header ('location:principal.php'); 
-		die();
-	}
-}
+    session_start();
+	include 'conecta.php';
+    
+    if ($conexao) {
+        $login=$_POST['login'];
+        $senha=md5($_POST['senha']);
+		$sql="SELECT * FROM usuario WHERE login='$login' AND senha='$senha'";
+        $result=pg_query($conexao, $sql);
+        $dados = pg_fetch_array($result);
+        
+        if ($login != "" && $senha != ""){
+            if (pg_num_rows($result) > 0) {
+                if ($dados['situacao'] == 'a' || 'A') {
+                    $_SESSION['login'] = $login;
+                    $_SESSION['nome'] = $dados['nome'];
+                    $_SESSION['categoria'] = $dados['categoria'];
+                    $_SESSION['situacao'] = $dados['situacao'];
+                    header('location:principal.php');
+                } else {
+                    unset ($_SESSION['login']);
+                    unset ($_SESSION['senha']);
+                    echo "<script>window.location='index.php';alert('O usuário não está ativo.')</script>";
+                }
+            } else {
+                unset ($_SESSION['login']);
+                unset ($_SESSION['senha']);
+                echo "<script>window.location='index.php';alert('Login ou senha inválidos.')</script>";
+            }
+        } else {
+            echo "<script>window.location='index.php';alert('Dados de acesso não informados.')</script>";
+        }
+    } else {
+        echo "<script>window.location='index.php';alert('Falha na conexão com o banco de dados!')</script>";
+    }
+    
+    echo "<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/style.css' rel='stylesheet'><div class='container droppedHover text-center'>
+    <div class='form-group'><div class='col-md-12'><a href='index.php' class='btn btn-lg btn-primary'>Voltar</a></div></div></div>";
+    
+    pg_close($conexao);
 ?>

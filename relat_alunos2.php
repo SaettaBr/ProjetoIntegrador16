@@ -86,91 +86,79 @@
 <br/>
 <br/>
 <br/>   
-                  <div class="modal fade" id="myModal" role="dialog">
-	<div class="modal-dialog">
+<div class="container">
+	<div class="row marketing">
+		<div class="col-lg-12">
+			<form class="form-horizontal" method="post">
+				<fieldset>
+				<legend class="text-center">Relação de Alunos e seus Projetos</legend>
+     				<div class="form-group">
+                    <label class="col-md-4 control-label" for="aluno">Aluno:</label>
+                    	<div class="col-md-8">
+                    	    <select id="matricula" name="matricula" class="form-control">
+                        	<option value="">Selecione...</option>
+                            <?php
+                            include 'conecta.php';
+                            $sql = "select distinct matricula, nome from aluno order by nome";
+                            $dados = pg_query($conexao, $sql);
+                            $linha = pg_fetch_array($dados);
+                            $total = pg_num_rows($dados);
+                                              
+                            if($total > 0) {
+                            	do {
+                            		echo "<option value='".$linha['matricula']."'>".$linha['nome']."</option>";
+                                }while($linha = pg_fetch_assoc($dados));
+                            }
+                            ?>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group text-center">
+						<div class="col-md-12">
+						<input type="submit" id="salvar" name="salvar" class="btn btn-primary" value="Enviar"></input>
+						</div>
+					</div>
+                              
+                </fieldset>
+            </form>
+        </div>
+    </div>
 
-	  <!-- Modal content-->
-	  <div class="modal-content">
-		<div class="modal-header">
-		  <button type="button" class="close" data-dismiss="modal">&times;</button>
-		  <h4 class="modal-title">Modal Header</h4>
-		</div>
-		<div class="modal-body">
-		  <p>Some text in the modal.</p>
-		</div>
-		<div class="modal-footer">
-		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		</div>
-	  </div>
-
-	</div>
-</div>
-<div class="content">
 <?php
-include 'conecta.php';
-	if($conexao != null){
-		
-		$sql = 
-		"
-			select matricula,nome,sexo,to_char(dtnasc, 'DD/MM/YYYY') as dtnasc,cidade,uf from aluno
-		";
-		
-		$result = pg_query($conexao,$sql);
-		
-		$rowss = pg_num_rows($result);
-		$index = 0;
-		
-		if($result != null && $result != false && $rowss > 0){
-			echo '<h1 color="#006295">Resultado da Consulta dos Alunos</h1>';			
-			$dados = pg_fetch_array($result,$index,PGSQL_ASSOC);
-			echo '<div class="table-responsive">';
-			echo '<table class="table table-striped table-hover">';
-			echo '<thead>';
-			echo "\n<tr>";
-			echo "<td  align=center valign=center>Matrícula</td>";
-			echo "<td align=center>Nome</td>";
-			echo "<td align=center>Sexo</td>";
-			echo "<td align=center>Data de Nascimento</td>";
-			echo "<td align=center>Cidade</td>";
-			echo "<td align=center>UF</td>";
-			echo "<td align=center>Opções</td>";
-			echo "</tr>";
-			echo '</thead>';
-			echo '<tbody>';
-			while($index < $rowss){
-				$dados = pg_fetch_array($result,$index,PGSQL_ASSOC);
-				$sexo = (($dados['sexo'] == 'M') ? 'Masculino' : (($dados['sexo'] == 'm') ? 'Masculino':(($dados['sexo'] == 'F') ? 'Feminino':'Feminino'))); 
-				$identEdit = trim($dados['matricula']);
-				$identExclud = trim($dados['matricula']);
-				$identTRow = $identEdit . $identExclud;
-		//		echo "<tr id='$identTRow'>";
-		//		echo "<th>$index</th>";
-				echo "\n<td align=center><p>".$dados['matricula']."</p></td>";
-				echo "<td align=center><p>".$dados['nome']."</p></td>";
-				echo "<td align=center><p>".$sexo."</p></td>";
-				echo "<td align=center><p>".$dados['dtnasc']."</p></td>";
-				echo "<td align=center><p>".$dados['cidade']."</p></td>";
-				echo "<td align=center><p>".$dados['uf']."</p></td>";
-				echo "<td align=center><a id='$identEdit' href='edita_aluno.php?mat=$identEdit'><i class='glyphicon glyphicon-pencil'></i></a '> | <a id='$identExclud' href='del_aluno.php?mat=$identExclud'><i class='glyphicon glyphicon-trash'></i></a></td>";
-				echo "</tr>";
-				echo "<br>";
-				$index += 1;
-			}
-			echo '</tbody>';
-			echo "</table>";
-			echo '</div>';
-		}else{
-			echo '<p color="#FF1A00">Error: Não foi possível mostrar dados!!</p>';
-		}
-		
-	}else{
-		echo '<p color="#FF1A00">Error: Tentativa de conexão com banco de dados mal sucedida!!!</p>';
+if (isset($_POST['matricula'])) {
+$aluno = $_POST['matricula'];
+}
+
+if ($conexao) {
+    if (isset($aluno)) {
+           if ($aluno != "") {
+			    $sql = "select distinct p.tema, nota from projeto p, grupo g, participa pt, aluno a where p.numero = g.num_proj and pt.id_grupo = g.id and pt.matricula = a.matricula and a.matricula = '$aluno' ORDER BY p.tema";
+               $dados = pg_query($sql);
+               $linha = pg_fetch_array($dados);
+               if (pg_num_rows($dados)) {
+                    echo "<div class='row marketing'><div id='list' class='row'><div class='table-responsive col-md-12'>
+                    <table class='table table-striped' cellspacing='0' cellpadding='0'><thead><tr><th>Tema</th><th>Nota
+                    </th></tr></thead><tbody>";
+                    do {
+                       echo "<tr><td>".$linha['tema']."</td><td>".$linha['nota']."</td></tr>";
+                    } while ($linha = pg_fetch_assoc($dados));
+                    echo "</tbody></table></div></div></div>";
+			   } else {
+                   echo "<h3 class='text-center'>Nenhum aluno encontrado.</h3>";
+               }
+		    } else {
+               echo "<h3 class='text-center'>Aluno não Informado.</h3>";
+            }   
 	}
-?>
-</div>
-</br></br>
-<button type="back" id="voltar" name="voltar" class="btn btn-warning" onClick="history.back()">Voltar</button>
-<script src="/bootstrap/js/jquery.min.js"></script>
- <script src="/bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>
+ } else {
+ echo "<h3 class='text-center'>Falha na conexão com o banco de dados.</h3>";
+ }
+          ?>
+          </div>
+     <script src="js/jquery.min.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/funcoes.js"></script>	
+          
+          </body>
+          </html>

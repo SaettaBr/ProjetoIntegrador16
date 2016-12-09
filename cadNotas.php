@@ -16,7 +16,9 @@
 			   	$result1=pg_query($sql);
 				$qtdNotas--;
 		 	}
+			echo "<script>window.location='notas.php';alert('Cadastro realizado com sucesso!')</script>";
 	}
+	
      echo "<link href='css/bootstrap.min.css' rel='stylesheet'><link href='css/style.css' rel='stylesheet'><div class='container droppedHover text-center'>
      <div class='form-group'><div class='col-md-12'><a href='cadNotas.php' class='btn btn-lg btn-primary'>Voltar</a></div></div></div>";
      

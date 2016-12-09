@@ -55,14 +55,9 @@
 include 'conecta.php';	
 	
 	if($conexao != null){
-		
-		$sql = 
-		"
-			select matricula,nome,sexo,to_char(dtnasc, 'DD/MM/YYYY') as dtnasc,cidade,uf from aluno
-		";
-		$sql2="select ";
+
+		$sql = "select matricula,nome,sexo,to_char(dtnasc, 'DD/MM/YYYY') as dtnasc,cidade,uf from aluno";
 		$result = pg_query($conexao,$sql);
-		
 		$rowss = pg_num_rows($result);
 		$index = 0;
 		
@@ -73,33 +68,25 @@ include 'conecta.php';
 			echo '<table class="table table-striped table-hover">';
 			echo '<thead>';
 			echo "<tr>";
-		//	echo '<td>#</td>';
-		//	echo "<td align=center valign=center>Matrícula</td>";
 			echo "<td align=center>Nome</td>";
 			echo "<td align=center>Curso</td>";
-		//	echo "<td align=center>Data de Nascimento</td>";
-		//	echo "<td align=center>Cidade</td>";
-		//	echo "<td align=center>UF</td>";
 			echo "<td align=center>Projeto Integrador</td>";
 			echo "</tr>";
 			echo '</thead>';
 			echo '<tbody>';
 			while($index < $rowss){
 				$dados = pg_fetch_array($result,$index,PGSQL_ASSOC);
-				$sexo = (($dados['sexo'] == 'm') ? 'Masculino' : 'Feminino'); 
+				$sexo = (($dados['sexo'] == 'm') ? 'Masculino' : (($dados['sexo'] == 'M') ? 'Masculino' :(($dados['sexo'] == 'F') ? 'Feminino' :'Feminino'))); 
 				$identEdit = trim($dados['matricula']);
 				$identExclud = trim($dados['matricula']);
 				$identTRow = $identEdit . $identExclud;
-				$identPi = '~'.trim($dados['matricula']);
-		//		echo "<tr id='$identTRow'>";
-		//		echo "<th>$index</th>";
-		//		echo "<td align=center><p>".$dados['matricula']."</p></td>";
+				$sql2 = "select sigla from curso c, projeto p, grupo g, participa pt, aluno a where c.numero=p.num_curso and p.numero=g.num_proj and g.id = pt.id_grupo and pt.matricula = a.matricula and a.matricula = '$identEdit'";
+		$result2 = pg_query($conexao,$sql2);
+		$dados2 = pg_fetch_array($result2);
+				$identPi = "http://".trim($dados2['sigla']).".projetointegrador.com.br/~".trim($dados['matricula']);
 				echo "<td align=center><p>".$dados['nome']."</p></td>";
-		//		echo "<td align=center><p>".$sexo."</p></td>";
 				echo "<td align=center><p>".$dados['dtnasc']."</p></td>";
-		//		echo "<td align=center><p>".$dados['cidade']."</p></td>";
-		//		echo "<td align=center><p>".$dados['uf']."</p></td>";
-				echo "<td align=center><a id='$identEdit' href='$identPi.php' onclick='collectElement( this.id )'><i class='glyphicon glyphicon-link'></i></a></td>";
+				echo "<td align=center><a id='$identEdit' href='$identPi' onclick='collectElement( this.id )'><i class='glyphicon glyphicon-link'></i></a></td>";
 				echo "</tr>";
 				echo "<br>";
 				$index += 1;

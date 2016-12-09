@@ -34,6 +34,7 @@
                                 <li><a href="form_cad_disciplina.php">Disciplinas</a></li>
                                 <li><a href="form_cad_projeto.php">Projetos</a></li>
                                 <li><a href="form_cad_grupo.php">Grupos</a></li>
+                                <li><a href="form_cad_atividades.php">Atividade</a></li>
                               </ul>
                               </li>
                     </ul>
@@ -49,6 +50,7 @@
                                 <li><a href="list_disciplina.php">Disciplinas</a></li>
                                 <li><a href="list_projeto.php">Projetos</a></li>
                                 <li><a href="list_grupo.php">Grupos</a></li>
+                                <li><a href="list_atividades.php">Atividade</a></li>
                               </ul>
                               </li>
                     </ul>
@@ -60,6 +62,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="relat_alunos.php">Alunos</a></li>
                                 <li><a href="relat_grupos.php">Grupos</a></li>
+                                <li><a href="relat_projetos.php">Projetos</a></li>
+                                <li><a href="relat_alunos2.php">Alunos X Projetos</a></li>
                                  </ul>
                               </li>
                     </ul>
@@ -73,17 +77,15 @@
       <li><a href="logout.php">Sair</a></li>
    </ul>
   </div>
-                   </div>
-                    </div>
-     
-                    </div>
-                    
-        
-                    </nav>
-                    <br/>
-                    <br/>
-                    <br/>
-                  
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<br/>
+<br/>
+<br/>   
      <div class="container">
           
           
@@ -99,7 +101,7 @@
                                    <div class="col-md-5">
                                         <select id="curso" name="curso" class="form-control">
                                              <option value="">Selecione...</option>
-                                             <<?php
+                                             <?php
                                                   include 'conecta.php';
                                                   
                                                   $sql = "SELECT * FROM curso";
@@ -122,7 +124,7 @@
                                    <div class="col-md-2">
                                         <select id="ano" name="ano" class="form-control">
                                              <option value="">Selecione...</option>
-                                             <<?php
+                                             <?php
                                                   include 'conecta.php';
                                                   
                                                   $sql = "SELECT DISTINCT ano FROM projeto";
