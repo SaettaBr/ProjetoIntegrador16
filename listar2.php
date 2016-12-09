@@ -76,11 +76,11 @@ include 'conecta.php';
 			echo '<tbody>';
 			while($index < $rowss){
 				$dados = pg_fetch_array($result,$index,PGSQL_ASSOC);
-				$sexo = (($dados['sexo'] == 'm') ? 'Masculino' : (($dados['sexo'] == 'M') ? 'Masculino' :(($dados['sexo'] == 'F') ? 'Feminino' :'Feminino'))); 
+				$sexo = (($dados['sexo'] == 'm' || 'M') ? 'Masculino':'Feminino'); 
 				$identEdit = trim($dados['matricula']);
 				$identExclud = trim($dados['matricula']);
 				$identTRow = $identEdit . $identExclud;
-				$sql2 = "select sigla from curso c, projeto p, grupo g, participa pt, aluno a where c.numero=p.num_curso and p.numero=g.num_proj and g.id = pt.id_grupo and pt.matricula = a.matricula and a.matricula = '$identEdit'";
+				$sql2 = "select * from curso c, projeto p, grupo g, participa pt, aluno a where c.numero=p.num_curso and p.numero=g.num_proj and g.id = pt.id_grupo and pt.matricula = a.matricula and a.matricula = '$identEdit'";
 		$result2 = pg_query($conexao,$sql2);
 		$dados2 = pg_fetch_array($result2);
 				$identPi = "http://".trim($dados2['sigla']).".projetointegrador.com.br/~".trim($dados['matricula']);

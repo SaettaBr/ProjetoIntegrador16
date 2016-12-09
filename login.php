@@ -1,14 +1,13 @@
 ﻿<?php
     session_start();
 	include 'conecta.php';
-    
+	$login=$_POST['login'];
+    $senha=$_POST['senha'];
+	
     if ($conexao) {
-        $login=$_POST['login'];
-        $senha=md5($_POST['senha']);
-		$sql="SELECT * FROM usuario WHERE login='$login' AND senha='$senha'";
+       	$sql="SELECT * FROM usuario WHERE login='$login' AND senha=md5('$senha')";
         $result=pg_query($conexao, $sql);
         $dados = pg_fetch_array($result);
-        
         if ($login != "" && $senha != ""){
             if (pg_num_rows($result) > 0) {
                 if ($dados['situacao'] == 'a' || 'A') {
@@ -38,4 +37,5 @@
     <div class='form-group'><div class='col-md-12'><a href='index.php' class='btn btn-lg btn-primary'>Voltar</a></div></div></div>";
     
     pg_close($conexao);
+
 ?>
